@@ -1,5 +1,5 @@
 <template>
-    <Imagegallery/>
+    <Imagegallery />
 </template>
 
 <script>
