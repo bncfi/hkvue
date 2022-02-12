@@ -39,7 +39,7 @@ export default({
     methods: {
        async workinfoSet() {
            this.workinfo = await this.works[this.$route.params.id]
-           
+           this.$forceUpdate()
            }
     },
     
