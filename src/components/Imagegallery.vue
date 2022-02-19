@@ -2,7 +2,7 @@
     <div>
         <Workinfo v-bind:works="this.works" v-bind:workinfo="this.works[this.$route.params.id]" />  
         <div class="image-reel">    
-            <div v-for="work in works.slice(0,2)" v-bind:key="work.id">
+            <div v-for="work in works" v-bind:key="work.id">
                 <router-link v-bind:to="{name:'Works', params: {id: work.id}}"> <img v-bind:src="work.imgsrc"/> </router-link>
             </div>
         </div>

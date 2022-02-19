@@ -1,5 +1,6 @@
 <template>
-    <Imagegallery v-bind:works="this.works" v-bind:workinfo="this.workinfo" />
+    <!--<Imagegallery v-bind:works="this.works" v-bind:workinfo="this.workinfo" />-->
+    <Workinfo v-bind:works="this.works"  v-bind:workinfo="this.works[this.$route.params.id]"/>
 </template>
 
 <script>
