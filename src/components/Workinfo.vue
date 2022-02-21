@@ -2,16 +2,14 @@
     <div v-if="works.length">
         <div class="gallery-container">
             <div class="prev-container">
-                <a class="prev" @click="changeWork(-1)">&#10094;</a>
+                <a @keyup.enter="changeWork(-1)" class="prev" @click="changeWork(-1)">&#10094;</a>
             </div>
             <div class="image-container">
-                {{console.log("params: ", $route.params.id, " workinfo: ", this.workinfo, " works: ", this.works)}}
-                
-                <img class="animate-opacity" :key="currentWork" v-bind:src="works[currentWork].imgsrc"/>
-                
+                <!--{{console.log("params: ", $route.params.id, " workinfo: ", this.workinfo, " works: ", this.works)}}-->
+                <img class="animate-opacity" @touchstart="swipeStart" @touchend="swipeEnd" :key="currentWork" v-bind:src="works[currentWork].imgsrc"/>
             </div>
             <div class="next-container">
-                <a class="next" @click="changeWork(1)">&#10095;</a>
+                <a @keyup.right="changeWork(1)" class="next" @click="changeWork(1)">&#10095;</a>
             </div>
         </div>
         <div class="work-info">
@@ -38,11 +36,23 @@ export default({
     data() {       
         return {
             currentWork: 0,
+            touchStartX: 0,
+            touchEndX: 0,
         }
     },
     computed: {
         console: () => console,
         window: () => window,
+    },
+    created() {
+	    window.addEventListener('keydown', this.keyHandler);
+        window.addEventListener('ontouchstart', this.swipeStart)
+        window.addEventListener('ontouchend', this.swipeEnd)
+    },
+    destroyed() {
+	    window.removeEventListener('keydown', this.keyHandler)
+        window.removeEventListener('ontouchstart', this.swipeStart)
+        window.removeEventListener('ontouchend', this.swipeEnd)
     },
     methods: {
         changeWork(nextWork) {
@@ -55,10 +65,35 @@ export default({
                 this.currentWork = 0;
             }
         },
-
         changeWorkById(id) {
             this.currentWork = id
         },
+        keyHandler(e) {
+            switch (e.keyCode) {
+                case 39:
+                    this.changeWork(1)
+                    break;
+                case 37:
+                    this.changeWork(-1)
+                    break;
+            }
+	    },
+        swipeHandler() {
+            if(this.touchStartX < this.touchEndX) {
+                this.changeWork(-1)
+            }if(this.touchStartX > this.touchEndX) {
+              this.changeWork(1)  
+            }
+        },
+        swipeStart(e) {
+            console.log("start ", e.changedTouches[0].screenX)
+            this.touchStartX = e.changedTouches[0].screenX
+        },
+        swipeEnd(e) {
+            console.log("stop ", e.changedTouches[0].screenX)
+            this.touchEndX = e.changedTouches[0].screenX
+            this.swipeHandler()
+        }
     }
 })
 </script>
