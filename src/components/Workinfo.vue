@@ -6,7 +6,7 @@
             </div>
             <div class="image-container">
                 <!--{{console.log("params: ", $route.params.id, " workinfo: ", this.workinfo, " works: ", this.works)}}-->
-                <img class="animate-opacity" @touchstart="swipeStart" @touchend="swipeEnd" :key="currentWork" v-bind:src="works[currentWork].imgsrc"/>
+                <img class="animate-opacity" @touchstart="swipeStart" @touchend="swipeEnd" v-bind:src="works[currentWork].imgsrc"/> <!--- :key="currentWork" -->
             </div>
             <div class="next-container">
                 <a @keyup.right="changeWork(1)" class="next" @click="changeWork(1)">&#10095;</a>
@@ -16,8 +16,8 @@
                 <h5>"{{works[currentWork].name}}", {{works[currentWork].media}}, {{works[currentWork].size}}, {{works[currentWork].year}}, {{works[currentWork].size}}, photo: {{works[currentWork].photo}} </h5>
         </div>
         <div class="image-reel">    
-            <div v-for="work in works" v-bind:key="work.id">
-                <router-link v-bind:to="{name:'Works', params: {id: work.id}}"> <img @click="changeWorkById(work.id)" :class="{'image-reel-active': currentWork === work.id, 'image-reel-opacity': currentWork != work.id}"  v-bind:src="work.imgsrc"/> </router-link>
+            <div v-for="work in works" v-bind:key="work.id" ref="workrefs">
+                <router-link v-bind:to="{name:'Works', params: {id: work.id}}"> <img @click="changeWorkById(work.id)" :class="{'image-reel-active': currentWork === work.id, 'image-reel-opacity': currentWork != work.id}" v-bind:src="work.imgsrc"/> </router-link>
             </div>
         </div>
     </div>
@@ -55,25 +55,31 @@ export default({
         window.removeEventListener('ontouchend', this.swipeEnd)
     },
     methods: {
-        changeWork(nextWork) {
-            const newWork = nextWork+this.currentWork
+        async changeWork(nextWork) {
+            const newWork = nextWork+this.currentWork            
             if(0 <= newWork && newWork < this.works.length) {
                 this.currentWork = newWork;
             } else if (newWork < 0){
                 this.currentWork = this.works.length-1
             }else{
-                this.currentWork = 0;
+                this.currentWork = 0
             }
+            //console.log(this.$refs.workrefs[this.currentWork])
+            const elem = await this.$refs.workrefs[this.currentWork]
+            elem.scrollIntoView({ behavior: "smooth" })
         },
         changeWorkById(id) {
             this.currentWork = id
+            //this.$refs.workrefs[this.currentWork].scrollIntoView({ behavior: 'smooth' })
         },
         keyHandler(e) {
             switch (e.keyCode) {
                 case 39:
+                    e.preventDefault()
                     this.changeWork(1)
                     break;
                 case 37:
+                    e.preventDefault()
                     this.changeWork(-1)
                     break;
             }
@@ -82,15 +88,15 @@ export default({
             if(this.touchStartX < this.touchEndX) {
                 this.changeWork(-1)
             }if(this.touchStartX > this.touchEndX) {
-              this.changeWork(1)  
+                this.changeWork(1)
             }
         },
         swipeStart(e) {
-            console.log("start ", e.changedTouches[0].screenX)
+            //console.log("start ", e.changedTouches[0].screenX)
             this.touchStartX = e.changedTouches[0].screenX
         },
         swipeEnd(e) {
-            console.log("stop ", e.changedTouches[0].screenX)
+            //console.log("stop ", e.changedTouches[0].screenX)
             this.touchEndX = e.changedTouches[0].screenX
             this.swipeHandler()
         }
@@ -144,7 +150,7 @@ p {
     width: 5%;
     height: 100%;
 }
-
+/*
 .next-container {
     float: right;
 }
@@ -152,6 +158,7 @@ p {
 .prev-container {
     float: left;
 }
+*/
 
 .prev, .next {
   cursor: pointer;
@@ -169,13 +176,25 @@ p {
 .image-reel {
     display: flex;
     text-align: center;
-    width:100%;
+    border: 1px solid violet;
+    overflow-x: auto;
+    overflow-y: hidden;
+    align-items: center;
+}
+
+.image-reel > div {
+    padding: 5px;
+    height: 15vh;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
+    /*box-sizing: border-box;*/
 }
 
 .image-reel img {
-    width:100%;
-    height: 100%;
-    object-fit: contain;
+    max-height: 100%;
+    min-width: 100%;
+    object-fit: cover;
 }
 
 .image-reel-opacity {
@@ -188,11 +207,5 @@ p {
 
 .image-reel img:hover {
     opacity: 1.0;
-}
-
-.image-reel > div {
-    max-width: 10%;
-    max-height: 10%;
-    padding: 5px;
 }
 </style>
