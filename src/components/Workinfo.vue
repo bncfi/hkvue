@@ -17,7 +17,9 @@
         </div>
         <div class="image-reel">    
             <div v-for="work in works" v-bind:key="work.id" ref="workrefs">
-                <router-link v-bind:to="{name:'Works', params: {id: work.id}}"> <img @click="changeWorkById(work.id)" :class="{'image-reel-active': currentWork === work.id, 'image-reel-opacity': currentWork != work.id}" v-bind:src="work.imgsrc"/> </router-link>
+                <router-link v-bind:to="{name:'Works', params: {id: work.id}}"> 
+                    <img @click="changeWorkById(work.id)" :class="{'image-reel-active': currentWork === work.id, 'image-reel-opacity': currentWork != work.id}" v-bind:src="work.imgsrc"/> 
+                </router-link>
             </div>
         </div>
     </div>
@@ -56,6 +58,9 @@ export default({
     },
     methods: {
         async changeWork(nextWork) {
+            const previousActive = this.$refs.workrefs[this.currentWork].getElementsByClassName("image-reel-active")
+            previousActive.item(0).classList.remove("image-reel-active")
+
             const newWork = nextWork+this.currentWork            
             if(0 <= newWork && newWork < this.works.length) {
                 this.currentWork = newWork;
@@ -65,8 +70,12 @@ export default({
                 this.currentWork = 0
             }
             //console.log(this.$refs.workrefs[this.currentWork])
-            const elem = await this.$refs.workrefs[this.currentWork]
-            elem.scrollIntoView({ behavior: "smooth" })
+            try {
+                const elem = await this.$refs.workrefs[this.currentWork]
+                elem.scrollIntoView({ behavior: "smooth" })
+            }catch(err) {
+                console.log(err.message)
+            }
         },
         changeWorkById(id) {
             this.currentWork = id
