@@ -19,7 +19,9 @@ export default ({
 
 <style scoped>
     #nav {
-    padding: 30px;
+    height: 5vh;
+    line-height:5vh;
+    vertical-align: middle;
     }
 
     #nav a {

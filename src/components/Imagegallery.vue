@@ -35,10 +35,6 @@ p {
     color:black;
     }
 
-.gallery-container {
-    border: 1px solid black;    
-}
-
 .image-reel {
     display: flex;
     text-align: center;

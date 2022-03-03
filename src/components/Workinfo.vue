@@ -1,26 +1,25 @@
 <template>
-    <div v-if="works.length">
+    <div class="main" v-if="works.length">
         <div class="gallery-container">
             <div class="prev-container">
                 <a @keyup.enter="changeWork(-1)" class="prev" @click="changeWork(-1)">&#10094;</a>
             </div>
             <div class="image-container">
-                <!--{{console.log("params: ", $route.params.id, " workinfo: ", this.workinfo, " works: ", this.works)}}-->
                 <img class="animate-opacity" @touchstart="swipeStart" @touchend="swipeEnd" v-bind:src="works[currentWork].imgsrc"/> <!--- :key="currentWork" -->
-            </div>
+            </div> 
             <div class="next-container">
                 <a @keyup.right="changeWork(1)" class="next" @click="changeWork(1)">&#10095;</a>
             </div>
-        </div>
-        <div class="work-info">
-                <h5>"{{works[currentWork].name}}", {{works[currentWork].media}}, {{works[currentWork].size}}, {{works[currentWork].year}}, {{works[currentWork].size}}, photo: {{works[currentWork].photo}} </h5>
-        </div>
-        <div class="image-reel">    
-            <div v-for="work in works" v-bind:key="work.id" ref="workrefs">
-                <router-link v-bind:to="{name:'Works', params: {id: work.id}}"> 
-                    <img @click="changeWorkById(work.id)" :class="{'image-reel-active': currentWork === work.id, 'image-reel-opacity': currentWork != work.id}" v-bind:src="work.imgsrc"/> 
-                </router-link>
+             <div class="work-info">
+                "{{works[currentWork].name}}", {{works[currentWork].media}}, {{works[currentWork].size}}, {{works[currentWork].year}}, {{works[currentWork].size}}, photo: {{works[currentWork].photo}}
             </div>
+            <div class="image-reel">    
+                <div v-for="work in works" v-bind:key="work.id" ref="workrefs">
+                    <router-link v-bind:to="{name:'Works', params: {id: work.id}}"> 
+                        <img @click="changeWorkById(work.id)" :class="{'image-reel-active': currentWork === work.id, 'image-reel-opacity': currentWork != work.id}" v-bind:src="work.imgsrc"/> 
+                    </router-link>
+                </div>
+        </div>
         </div>
     </div>
     <div v-else>
@@ -58,8 +57,8 @@ export default({
     },
     methods: {
         async changeWork(nextWork) {
-            const previousActive = this.$refs.workrefs[this.currentWork].getElementsByClassName("image-reel-active")
-            previousActive.item(0).classList.remove("image-reel-active")
+            //const previousActive = this.$refs.workrefs[this.currentWork].getElementsByClassName("image-reel-active")
+            //previousActive.item(0).classList.remove("image-reel-active")
 
             const newWork = nextWork+this.currentWork            
             if(0 <= newWork && newWork < this.works.length) {
@@ -69,7 +68,7 @@ export default({
             }else{
                 this.currentWork = 0
             }
-            //console.log(this.$refs.workrefs[this.currentWork])
+            
             try {
                 const elem = await this.$refs.workrefs[this.currentWork]
                 elem.scrollIntoView({ behavior: "smooth" })
@@ -125,49 +124,40 @@ export default({
     animation-duration: 0.8s;
 }
 
-p {
-    color:black;
-    }
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:stretch;
+    border: 1px solid violet;
+    height: 95vh;
+    width: 100%;
+}
 
 .gallery-container {
     border: 1px solid black;
     align-items: center;
     display: flex;
-    height: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .image-container {
-    max-width: 40%;
+    height: 70vh;
     margin: auto; /*centeroi elementin flexboxis */
-    border: 1px solid blue;
+    /*border: 1px solid blue;*/
+    width: 90vw;
 }
 
 .image-container img {
-    width: 100%;
+    height: 100%;
     object-fit: contain;
-}
-
-.work-info {
-    text-align: center;
-    width: 100%;
-    border: 1px solid coral;
-    vertical-align:bottom; 
 }
 
 .prev-container, .next-container {
     border: 1px solid red;
-    width: 5%;
-    height: 100%;
+    width: 3vw;
 }
-/*
-.next-container {
-    float: right;
-}
-
-.prev-container {
-    float: left;
-}
-*/
 
 .prev, .next {
   cursor: pointer;
@@ -178,8 +168,13 @@ p {
   user-select: none;
 }
 
-.next {
-  right: 0;
+.work-info {
+    height: 5vh;
+    width: 100vw;
+    line-height: 5vh;
+    text-align: center;
+    vertical-align:middle;
+    border: 1px solid coral;
 }
 
 .image-reel {
@@ -189,15 +184,14 @@ p {
     overflow-x: auto;
     overflow-y: hidden;
     align-items: center;
+    column-gap: 5px;
 }
 
 .image-reel > div {
-    padding: 5px;
     height: 15vh;
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: auto;
-    /*box-sizing: border-box;*/
 }
 
 .image-reel img {
@@ -212,9 +206,45 @@ p {
 
 .image-reel-active {
     opacity: 1.0;
+    transition: 0.25s;
 }
 
 .image-reel img:hover {
     opacity: 1.0;
+    transition: 0.25s;
 }
+
+/* tablet */
+@media screen and (max-width: 834x) {
+    .image-container {
+        height: 70vh;
+        margin: auto; 
+        border: 1px solid blue;
+        width: 50vw;
+    }
+    .prev-container, .next-container {
+        display:none;
+    }
+}
+/*mobile */
+@media screen and (max-width: 390px) {
+    .image-container {
+        height: 43vh;
+        margin: auto; /*centeroi elementin flexboxis */
+        border: 1px solid blue;
+        width: auto;
+        overflow:auto;
+    }
+    .work-info {
+        height: 10vh;
+        line-height: 10vh;
+        font-size: 10px;
+    }
+    .prev-container, .next-container {
+        display:none;
+    }
+}
+
+
+
 </style>
