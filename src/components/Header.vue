@@ -22,14 +22,55 @@ export default ({
     height: 5vh;
     line-height:5vh;
     vertical-align: middle;
+    font-size: 1.3vw;
     }
 
     #nav a {
     font-weight: bold;
-    color: #2c3e50;
+    color: black;
+    text-decoration: none;
     }
 
     #nav a.router-link-exact-active {
-    color: #42b983;
+    color:black;
     }
+
+/* tablet */
+@media screen and (max-width: 1024px) and (orientation: portrait) {
+    #nav {
+        font-size: 2vw;
+    }
+}
+
+@media screen and (max-width: 1024px) and (orientation: landscape) {
+    #nav {
+        font-size: 2vw;
+    }
+}
+
+/*mobile */
+@media screen and (max-width: 390px) and (orientation: portrait) {
+    #nav {
+        font-size: 5vw;
+    }
+}
+
+@media screen and (max-width: 850px) and (orientation: landscape) {
+    #nav {
+        font-size: 1.7vw;
+    }
+}
+
+/*samsung*/
+@media screen and (max-width: 415px) and (orientation: portrait) {
+    #nav {
+        font-size: 5vw;
+    }    
+}
+
+@media screen and (max-width: 750px) and (orientation: landscape) {
+    #nav {
+        font-size: 1.7vw;
+    }
+}
 </style>

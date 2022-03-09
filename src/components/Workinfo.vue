@@ -11,7 +11,7 @@
                 <a @keyup.right="changeWork(1)" class="next" @click="changeWork(1)">&#10095;</a>
             </div>
              <div class="work-info">
-                "{{works[currentWork].name}}", {{works[currentWork].media}}, {{works[currentWork].size}}, {{works[currentWork].year}}, {{works[currentWork].size}}, photo: {{works[currentWork].photo}}
+               <p> "{{works[currentWork].name}}", {{works[currentWork].size}}, {{works[currentWork].media}}, {{works[currentWork].year}} <br/> photo: {{works[currentWork].photo}}</p>
             </div>
             <div class="image-reel">    
                 <div v-for="work in works" v-bind:key="work.id" ref="workrefs">
@@ -123,19 +123,23 @@ export default({
     animation-name: opac;
     animation-duration: 0.8s;
 }
+body {
+    overflow: hidden;
+}
+
 
 .main {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items:stretch;
-    border: 1px solid violet;
+    /*border: 1px solid violet;*/
     height: 95vh;
     width: 100%;
 }
 
 .gallery-container {
-    border: 1px solid black;
+    /*border: 1px solid black;*/
     align-items: center;
     display: flex;
     justify-content: center;
@@ -143,7 +147,7 @@ export default({
 }
 
 .image-container {
-    height: 70vh;
+    height: 69vh;
     margin: auto; /*centeroi elementin flexboxis */
     /*border: 1px solid blue;*/
     width: 90vw;
@@ -155,7 +159,7 @@ export default({
 }
 
 .prev-container, .next-container {
-    border: 1px solid red;
+    /*border: 1px solid red;*/
     width: 3vw;
 }
 
@@ -169,18 +173,25 @@ export default({
 }
 
 .work-info {
-    height: 5vh;
+    height: 9vh;
     width: 100vw;
-    line-height: 5vh;
+    font-size: 1vw;
+    line-height: 9vh;
     text-align: center;
     vertical-align:middle;
-    border: 1px solid coral;
+    /*border: 1px solid coral;*/
+}
+
+.work-info p {
+  line-height: 1.5;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .image-reel {
     display: flex;
     text-align: center;
-    border: 1px solid violet;
+    /*border: 1px solid violet;*/
     overflow-x: auto;
     overflow-y: hidden;
     align-items: center;
@@ -188,7 +199,7 @@ export default({
 }
 
 .image-reel > div {
-    height: 15vh;
+    height: 13vh;
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: auto;
@@ -222,28 +233,86 @@ export default({
     }
     .prev-container, .next-container {
         display:visible;
+    }    
+    .work-info {
+        height: 10vh;
+        line-height: 10vh;
+        font-size: 2vw;
     }
 }
 
 @media screen and (max-width: 1024px) and (orientation: landscape) {
     .image-container {
-        height: 70vh;
+        height: 65vh;
         width: auto;
     }
     .prev-container, .next-container {
         display:visible;
     }
+    .work-info {
+        height: 10vh;
+        line-height: 10vh;
+        font-size: 1.7vw;
+    }
 }
-/*mobile */
-@media screen and (max-width: 390px) and (orientation: portrait) {
+/*samsung*/
+@media screen and (max-width: 920px) and (orientation: landscape) {
     .image-container {
-        height: 43vh;
+        height: 65vh;
+        width: auto;
+    }
+    .prev-container, .next-container {
+        display:visible;
+    }
+    .work-info {
+        height: 10vh;
+        line-height: 10vh;
+        font-size: 1vw;
+    }
+}
+
+/*mobile */
+/*samsung*/
+@media screen and (max-width: 415px) and (orientation: portrait) {
+    .image-container {
+        height: 36vh;
         width: auto;
     }
     .work-info {
         height: 10vh;
         line-height: 10vh;
-        font-size: 10px;
+        font-size: 3vw;
+    }
+    .prev-container, .next-container {
+        display:none;
+    }
+}
+
+@media screen and (max-width: 750px) and (orientation: landscape) {
+    .image-container {
+        height: 63vh;
+        width: auto;
+    }
+    .work-info {
+        height: 10vh;
+        line-height: 10vh;
+        font-size: 1.1vw;
+    }
+    .prev-container, .next-container {
+        display:visible;
+    }
+}
+
+/*iphone*/
+@media screen and (max-width: 390px) and (orientation: portrait) {
+    .image-container {
+        height: 46vh;
+        width: auto;
+    }
+    .work-info {
+        height: 10vh;
+        line-height: 10vh;
+        font-size: 3vw;
     }
     .prev-container, .next-container {
         display:none;
@@ -256,9 +325,39 @@ export default({
         width: auto;
     }
     .work-info {
+        height: 11vh;
+        line-height: 11vh;
+        font-size: 1.2vw;
+    }
+    .prev-container, .next-container {
+        display:visible;
+    }
+}
+/*small screen mobiles*/
+@media screen and (max-width: 365px) and (orientation: portrait) {
+    .image-container {
+        height: 40vh;
+        width: auto;
+    }
+    .work-info {
         height: 10vh;
         line-height: 10vh;
-        font-size: 10px;
+        font-size: 3vw;
+    }
+    .prev-container, .next-container {
+        display:none;
+    }
+}
+
+@media screen and (max-width: 850px) and (orientation: landscape) {
+    .image-container {
+        height: 63vh;
+        width: auto;
+    }
+    .work-info {
+        height: 11vh;
+        line-height: 11vh;
+        font-size: 1.2vw;
     }
     .prev-container, .next-container {
         display:visible;

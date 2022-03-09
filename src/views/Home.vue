@@ -1,18 +1,52 @@
 <template>
   <div class="home">
-    <h1>Hermannin kotisivu</h1>
-    <!---<HelloWorld msg="Welcome to Your Vue.js App"/>--->
+    <img class="frontpage-image" src="/images/others/frontpage.jpg"/>
+    <br/><br/>
+    Contact: hermanni.keko at gmail.com
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
   name: 'Home',
   components: {
-    //HelloWorld
   }
 }
 </script>
+
+<style scoped>
+.frontpage-image {
+  height: 80vh;
+}
+
+/* tablet */
+@media screen and (max-width: 1024px) and (orientation: portrait) {
+    .frontpage-image {
+      margin-top: 20%;
+      width: 100vw;
+      height: auto;
+    }
+}
+
+@media screen and (max-width: 1024px) and (orientation: landscape) {
+.frontpage-image {
+  height: 80vh;
+}
+}
+
+/*mobile */
+@media screen and (max-width: 390px) and (orientation: portrait) {
+  .frontpage-image {
+    margin-top: 40%;
+    width: 100vw;
+    height: auto;
+  }
+}
+
+@media screen and (max-width: 850px) and (orientation: landscape) {
+.frontpage-image {
+  height: 80vh;
+}
+}
+</style>
