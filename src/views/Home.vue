@@ -17,6 +17,7 @@ export default {
 
 <style scoped>
 .frontpage-image {
+  margin-top: 2%;
   height: 80vh;
 }
 
