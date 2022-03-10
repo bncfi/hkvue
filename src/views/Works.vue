@@ -15,13 +15,18 @@ export default({
     data() {
         return {
             works: [],
+            worksTest: [],
             workinfo: null
         }
     },
     mounted() {
         fetch("http://localhost:3000/works")
         .then((res) => res.json())
-        .then(data  => {this.works = data;})
+        .then(data  => {this.works = data;console.log(this.works)})
+        .catch(err => console.log(err.message)),
+        fetch("./db/db.json")
+        .then((res) => res.json())
+        .then(data => {this.worksTest = data;console.log(this.worksTest.works)})
         .catch(err => console.log(err.message))
     },
     computed: {
