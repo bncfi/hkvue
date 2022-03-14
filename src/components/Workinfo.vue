@@ -5,7 +5,7 @@
                 <a @keyup.enter="changeWork(-1)" class="prev" @click="changeWork(-1)">&#10094;</a>
             </div>
             <div class="image-container">
-                <img class="animate-opacity" @touchstart="swipeStart" @touchend="swipeEnd" v-bind:src="works[currentWork].imgsrc"/> <!--- :key="currentWork" -->
+                <img class="animate-opacity" rel="preload" @touchstart="swipeStart" @touchend="swipeEnd" v-bind:src="'images/works/'+works[currentWork].imgsrc"/> <!--- :key="currentWork" -->
             </div> 
             <div class="next-container">
                 <a @keyup.right="changeWork(1)" class="next" @click="changeWork(1)">&#10095;</a>
@@ -16,14 +16,14 @@
             <div class="image-reel">    
                 <div v-for="work in works" v-bind:key="work.id" ref="workrefs">
                     <router-link v-bind:to="{name:'Works', params: {id: work.id}}"> 
-                        <img @click="changeWorkById(work.id)" :class="{'image-reel-active': currentWork === work.id, 'image-reel-opacity': currentWork != work.id}" v-bind:src="work.imgsrc"/> 
+                        <img @click="changeWorkById(work.id)" :class="{'image-reel-active': currentWork === work.id, 'image-reel-opacity': currentWork != work.id}" v-bind:src="'images/works/thumbs/'+work.thumb"/> 
                     </router-link>
                 </div>
         </div>
         </div>
     </div>
     <div v-else>
-        <h3>Could not load works!</h3>
+        <h3>Loading works!</h3>
     </div>
 </template>
 <script>
@@ -57,9 +57,6 @@ export default({
     },
     methods: {
         async changeWork(nextWork) {
-            //const previousActive = this.$refs.workrefs[this.currentWork].getElementsByClassName("image-reel-active")
-            //previousActive.item(0).classList.remove("image-reel-active")
-
             const newWork = nextWork+this.currentWork            
             if(0 <= newWork && newWork < this.works.length) {
                 this.currentWork = newWork;
@@ -73,12 +70,11 @@ export default({
                 const elem = await this.$refs.workrefs[this.currentWork]
                 elem.scrollIntoView({ behavior: "smooth" })
             }catch(err) {
-                console.log(err.message)
+                //console.log(err.message)
             }
         },
         changeWorkById(id) {
             this.currentWork = id
-            //this.$refs.workrefs[this.currentWork].scrollIntoView({ behavior: 'smooth' })
         },
         keyHandler(e) {
             switch (e.keyCode) {
@@ -100,11 +96,9 @@ export default({
             }
         },
         swipeStart(e) {
-            //console.log("start ", e.changedTouches[0].screenX)
             this.touchStartX = e.changedTouches[0].screenX
         },
         swipeEnd(e) {
-            //console.log("stop ", e.changedTouches[0].screenX)
             this.touchEndX = e.changedTouches[0].screenX
             this.swipeHandler()
         }
@@ -133,13 +127,11 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items:stretch;
-    /*border: 1px solid violet;*/
     height: 95vh;
     width: 100%;
 }
 
 .gallery-container {
-    /*border: 1px solid black;*/
     align-items: center;
     display: flex;
     justify-content: center;
@@ -149,7 +141,6 @@ body {
 .image-container {
     height: 69vh;
     margin: auto; /*centeroi elementin flexboxis */
-    /*border: 1px solid blue;*/
     width: 90vw;
 }
 
@@ -159,7 +150,6 @@ body {
 }
 
 .prev-container, .next-container {
-    /*border: 1px solid red;*/
     width: 3vw;
 }
 
@@ -179,7 +169,6 @@ body {
     line-height: 9vh;
     text-align: center;
     vertical-align:middle;
-    /*border: 1px solid coral;*/
 }
 
 .work-info p {
@@ -191,7 +180,6 @@ body {
 .image-reel {
     display: flex;
     text-align: center;
-    /*border: 1px solid violet;*/
     overflow-x: auto;
     overflow-y: hidden;
     align-items: center;

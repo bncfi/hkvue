@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <img class="frontpage-image" src="/images/others/frontpage.jpg"/>
+    <img class="frontpage-image" src="images/others/frontpage.jpg"/>
     <br/><br/>
     Contact: hermanni.keko at gmail.com
   </div>
@@ -39,7 +39,7 @@ export default {
 /*mobile */
 @media screen and (max-width: 390px) and (orientation: portrait) {
   .frontpage-image {
-    margin-top: 40%;
+    margin-top: 35%;
     width: 100vw;
     height: auto;
   }
@@ -47,7 +47,7 @@ export default {
 
 @media screen and (max-width: 850px) and (orientation: landscape) {
 .frontpage-image {
-  height: 80vh;
+  height: 75vh;
 }
 }
 </style>

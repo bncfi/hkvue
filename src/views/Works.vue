@@ -1,5 +1,4 @@
 <template>
-    <!--<Imagegallery v-bind:works="this.works" v-bind:workinfo="this.workinfo" />-->
     <Workinfo v-bind:works="this.works"  v-bind:workinfo="this.works[this.$route.params.id]"/>
 </template>
 
@@ -20,13 +19,14 @@ export default({
         }
     },
     mounted() {
+        /*
         fetch("http://localhost:3000/works")
         .then((res) => res.json())
         .then(data  => {this.works = data;console.log(this.works)})
-        .catch(err => console.log(err.message)),
+        .catch(err => console.log(err.message)),*/
         fetch("./db/db.json")
         .then((res) => res.json())
-        .then(data => {this.worksTest = data;console.log(this.worksTest.works)})
+        .then(data => {this.works = data.works;})
         .catch(err => console.log(err.message))
     },
     computed: {

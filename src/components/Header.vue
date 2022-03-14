@@ -19,6 +19,7 @@ export default ({
 
 <style scoped>
     #nav {
+    margin-top: 0.5%;
     height: 5vh;
     line-height:5vh;
     vertical-align: middle;
@@ -38,39 +39,41 @@ export default ({
 /* tablet */
 @media screen and (max-width: 1024px) and (orientation: portrait) {
     #nav {
-        font-size: 2vw;
+        font-size: 25px;
     }
 }
 
 @media screen and (max-width: 1024px) and (orientation: landscape) {
     #nav {
-        font-size: 2vw;
-    }
-}
-
-/*mobile */
-@media screen and (max-width: 390px) and (orientation: portrait) {
-    #nav {
-        font-size: 5vw;
-    }
-}
-
-@media screen and (max-width: 850px) and (orientation: landscape) {
-    #nav {
-        font-size: 1.7vw;
+        font-size: 25px;
     }
 }
 
 /*samsung*/
 @media screen and (max-width: 415px) and (orientation: portrait) {
     #nav {
-        font-size: 5vw;
+        font-size: 20px;
     }    
 }
 
 @media screen and (max-width: 750px) and (orientation: landscape) {
     #nav {
-        font-size: 1.7vw;
+        font-size: 20px;
     }
 }
+
+/*mobile */
+@media screen and (max-width: 390px) and (orientation: portrait) {
+    #nav {
+        font-size: 17px;
+    }
+}
+
+@media screen and (max-width: 850px) and (orientation: landscape) {
+    #nav {
+        font-size: 17px;
+    }
+}
+
+
 </style>

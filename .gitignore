@@ -2,6 +2,7 @@
 node_modules
 assets/images/
 public/images
+orig_kuvat
 /dist
 db.json
 

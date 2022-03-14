@@ -98,7 +98,7 @@
       width:100vw;
     }
     .cv {
-      margin-left:0;
+      margin-left:1%;
       width:100%;
       font-size: 3vw;
       text-align:left;
